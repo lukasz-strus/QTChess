@@ -8,6 +8,35 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     displayCheck();
 }
 
+void Game::start()
+{
+    for(size_t i =0, n = listG.size(); i < n; i++)
+        removeFromScene(listG[i]);
+
+    addToScene(turnDisplay);
+
+    QGraphicsTextItem* whitePiece = new QGraphicsTextItem();
+    whitePiece->setPos(70,10);
+    whitePiece->setZValue(1);
+    whitePiece->setDefaultTextColor(Qt::white);
+    whitePiece->setFont(QFont("Arial",18));
+    whitePiece->setPlainText("Białe pionki");
+    addToScene(whitePiece);
+
+    QGraphicsTextItem *blackPiece = new QGraphicsTextItem();
+    blackPiece->setPos(1170,10);
+    blackPiece->setZValue(1);
+    blackPiece->setDefaultTextColor(Qt::black);
+    blackPiece->setFont(QFont("Arial",18));
+    blackPiece->setPlainText("Czarne pionki");
+    addToScene(blackPiece);
+
+    addToScene(check);
+
+
+    //chess->addChessPiece(); //TODO
+}
+
 void Game::displayMainMenu()
 {
     createTitle();
@@ -23,7 +52,7 @@ void Game::createPlayButton()
     Button * button = new Button("Graj");
 
     int xPos = width()/2 - button->boundingRect().width()/2;
-    int yPos = 320;
+    int yPos = 350;
     button->setPos(xPos,yPos);
 
     connect(button,SIGNAL(clicked()) , this , SLOT(start()));
@@ -37,7 +66,7 @@ void Game::createQuitButton()
     Button * quitButton = new Button("Quit");
 
     int qxPos = width()/2 - quitButton->boundingRect().width()/2;
-    int qyPos = 375;
+    int qyPos = 450;
     quitButton->setPos(qxPos,qyPos);
 
     connect(quitButton, SIGNAL(clicked()),this,SLOT(close()));
@@ -82,9 +111,21 @@ void Game::drawChessBoard()
 {
     chess = new ChessBoard();
 
+    drawDeadHolder(0,0,Qt::lightGray);
+    drawDeadHolder(1100,0,Qt::lightGray);
+
     chess->drawBoxes(width()/2-400,50);
 }
 
+void Game::drawDeadHolder(int x, int y,QColor color)
+{
+    deadHolder = new QGraphicsRectItem(x,y,300,900);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    deadHolder->setBrush(brush);
+    addToScene(deadHolder);
+}
 
 void Game::addToScene(QGraphicsItem *item)
 {
@@ -113,9 +154,9 @@ void Game::displayTurn()
     turnDisplay = new QGraphicsTextItem();
     turnDisplay->setPos(width()/2-100,10);
     turnDisplay->setZValue(1);
-    turnDisplay->setDefaultTextColor(Qt::white);
-    turnDisplay->setFont(QFont("",18));
-    turnDisplay->setPlainText("Turn : WHITE");
+    turnDisplay->setDefaultTextColor(Qt::red);
+    turnDisplay->setFont(QFont("Arial",18));
+    turnDisplay->setPlainText("Kolej gracza białego");
 
 }
 

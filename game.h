@@ -20,13 +20,19 @@ public:
 
     void drawChessBoard();
     void displayMainMenu();
+    void drawDeadHolder(int x, int y,QColor color);
 
     void addToScene(QGraphicsItem *item);
     void removeFromScene(QGraphicsItem *item);
+
+public slots:
+    void start();
+
 private:
     QGraphicsScene *scene;
     QGraphicsTextItem * turnDisplay;
     ChessBoard *chess;
+    QGraphicsRectItem * deadHolder;
 
     QList <QGraphicsItem *> listG;
 
