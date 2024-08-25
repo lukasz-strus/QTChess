@@ -34,6 +34,8 @@ private:
     void displayTurn();
     void displayCheck();
 
+    void createTitle();
+
 
 };
 
