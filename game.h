@@ -35,7 +35,8 @@ private:
     void displayCheck();
 
     void createTitle();
-
+    void createPlayButton();
+    void createQuitButton();
 
 };
 

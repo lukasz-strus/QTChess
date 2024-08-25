@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    button.cpp \
     chessboard.cpp \
     chessbox.cpp \
     chesspiece.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    button.h \
     chessboard.h \
     chessbox.h \
     chesspiece.h \
