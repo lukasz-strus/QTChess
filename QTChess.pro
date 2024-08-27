@@ -14,6 +14,7 @@ SOURCES += \
     chessbox.cpp \
     chesspiece.cpp \
     game.cpp \
+    king.cpp \
     main.cpp
 
 HEADERS += \
@@ -21,7 +22,8 @@ HEADERS += \
     chessboard.h \
     chessbox.h \
     chesspiece.h \
-    game.h
+    game.h \
+    king.h
 
 FORMS +=
 
@@ -29,3 +31,8 @@ FORMS +=
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
+
+RESOURCES += \
+    images.qrc

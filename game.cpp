@@ -1,5 +1,6 @@
 #include "game.h"
 #include "button.h"
+#include "king.h"
 
 Game::Game(QWidget *parent) : QGraphicsView(parent)
 {
@@ -33,9 +34,98 @@ void Game::start()
 
     addToScene(check);
 
-
-    //chess->addChessPiece(); //TODO
+    chess->addChessPiece();
 }
+
+void Game::displayDeadWhite()
+{
+    int SHIFT = 50;
+    int j = 0;
+    int k = 0;
+    for(size_t i = 0,n = whiteDead.size(); i<n; i++) {
+        if(j == 4){
+            k++;
+            j = 0;
+        }
+        whiteDead[i]->setPos(40+SHIFT*j++,100+SHIFT*2*k);
+    }
+}
+
+void Game::displayDeadBlack()
+{
+    int SHIFT = 50;
+    int j = 0;
+    int k = 0;
+    for(size_t i = 0,n = blackDead.size(); i<n; i++) {
+        if(j == 4){
+            k++;
+            j = 0;
+        }
+        blackDead[i]->setPos(1140+SHIFT*j++,100+SHIFT*2*k);
+    }
+}
+
+void Game::placeInDeadPlace(ChessPiece *piece)
+{
+    if(piece->getSide() == "WHITE") {
+        whiteDead.append(piece);
+        King *g = dynamic_cast <King *>(piece);
+        if(g){
+
+            check->setPlainText("Black Won");
+            gameOver();
+        }
+        displayDeadWhite();
+    }
+    else{
+        blackDead.append(piece);
+        King *g = dynamic_cast <King *>(piece);
+        if(g){
+
+            check->setPlainText("White Won");
+            gameOver();
+        }
+        displayDeadBlack();
+    }
+    alivePiece.removeAll(piece);
+}
+
+void Game::gameOver()
+{
+    //removeAll();
+    setTurn("WHITE");
+    alivePiece.clear();
+    chess->reset();
+
+}
+
+void Game::removeAll(){
+    QList<QGraphicsItem*> itemsList = scene->items();
+    for(size_t i = 0, n = itemsList.size();i<n;i++) {
+        if(itemsList[i]!=check)
+            removeFromScene(itemsList[i]);
+    }
+}
+
+QString Game::getTurn()
+{
+    return turn;
+}
+
+void Game::setTurn(QString value)
+{
+    turn = value;
+}
+
+void Game::changeTurn()
+{
+    if(getTurn() == "WHITE")
+        setTurn("BLACK");
+    else
+        setTurn("WHITE");
+    turnDisplay->setPlainText("Turn : " + getTurn());
+}
+
 
 void Game::displayMainMenu()
 {

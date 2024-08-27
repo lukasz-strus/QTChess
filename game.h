@@ -10,31 +10,42 @@ class Game:public QGraphicsView
 {
     Q_OBJECT
 
-
 public:
     Game(QWidget *parent = 0);
 
     QGraphicsTextItem *check;
-
     ChessBox *collection[8][8];
+    QList <ChessPiece *> alivePiece;
+    ChessPiece *pieceToMove;
 
     void drawChessBoard();
     void displayMainMenu();
     void drawDeadHolder(int x, int y,QColor color);
+    void displayDeadWhite();
+    void displayDeadBlack();
+    void placeInDeadPlace(ChessPiece *piece);
 
     void addToScene(QGraphicsItem *item);
     void removeFromScene(QGraphicsItem *item);
 
+    QString getTurn();
+    void setTurn(QString value);
+    void changeTurn();
+
+    void gameOver();
+    void removeAll();
 public slots:
     void start();
 
 private:
     QGraphicsScene *scene;
+    QList <QGraphicsItem *> listG;
     QGraphicsTextItem * turnDisplay;
     ChessBoard *chess;
     QGraphicsRectItem * deadHolder;
-
-    QList <QGraphicsItem *> listG;
+    QList <ChessPiece *> whiteDead;
+    QList <ChessPiece *> blackDead;
+    QString turn;
 
     void createScene();
     void displayTurn();
