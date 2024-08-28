@@ -28,8 +28,8 @@ public:
     void addToScene(QGraphicsItem *item);
     void removeFromScene(QGraphicsItem *item);
 
-    QString getTurn();
-    void setTurn(QString value);
+    Side::Values getTurn();
+    void setTurn(Side::Values value);
     void changeTurn();
 
     void gameOver();
@@ -45,7 +45,7 @@ private:
     QGraphicsRectItem * deadHolder;
     QList <ChessPiece *> whiteDead;
     QList <ChessPiece *> blackDead;
-    QString turn;
+    Side::Values turn;
 
     void createScene();
     void displayTurn();

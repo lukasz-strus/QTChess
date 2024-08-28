@@ -9,6 +9,9 @@ ChessBox::ChessBox(QGraphicsItem *parent):QGraphicsRectItem(parent)
     setRect(0,0,100,100);
     brush.setStyle(Qt::SolidPattern);
     setZValue(-1);
+    setHasChessPiece(false);
+    setChessPieceColor("NONE");
+    currentPiece = NULL;
 }
 
 void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -19,10 +22,12 @@ void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
         return;
     }
 
-    if(game->pieceToMove){
-        //if same team
-        if(this->getChessPieceColor() == game->pieceToMove->getSide())
+    if(game->pieceToMove)
+    {
+
+        if(this->getChessPieceColor() == game->pieceToMove->getSideAsString())
             return;
+
         //removing the eaten piece
         QList <ChessBox *> movLoc = game->pieceToMove->moveLocation();
         //TO make sure the selected box is in move zone
@@ -98,10 +103,10 @@ void ChessBox::checkForCheck()
                     bList[j]->resetOriginalColor();
                     pList[i]->getCurrentBox()->resetOriginalColor();
 
-                    if(p->getSide() == "WHITE")
-                        QMessageBox::information(nullptr, "Game over", "Black Won       ");
+                    if(p->getSide() == Side::Values::White)
+                        QMessageBox::information(nullptr, "Koniec gry!", "Gracz czarny wygrał       ");
                     else
-                        QMessageBox::information(nullptr, "Game over", "White Won       ");
+                        QMessageBox::information(nullptr, "Koniec gry!", "Gracz biały wygrał       ");
                     game->gameOver();
                 }
                 c++;
@@ -138,7 +143,7 @@ void ChessBox::setHasChessPiece(bool value, ChessPiece *piece)
 {
     hasChessPiece = value;
     if(value)
-        setChessPieceColor(piece->getSide());
+        setChessPieceColor(piece->getSideAsString());
     else
         setChessPieceColor("NONE");
 }

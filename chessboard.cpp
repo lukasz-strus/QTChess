@@ -1,6 +1,12 @@
 #include "chessboard.h"
 #include "chessbox.h"
 #include "game.h"
+#include "queen.h"
+#include "rook.h"
+#include "pawn.h"
+#include "king.h"
+#include "knight.h"
+#include "bishop.h"
 
 extern Game *game;
 ChessBoard::ChessBoard()
@@ -58,10 +64,56 @@ void ChessBoard::addChessPiece() {
 
 void ChessBoard::setUpWhite()
 {
-    //TODO NOW set up white pieces
+    Side::Values side = Side::Values::White;
+
+    ChessPiece *piece;
+    for(int i = 0; i < 8; i++) {
+        piece = new Pawn(side);
+        white.append(piece);
+    }
+    piece = new Rook(side);
+    white.append(piece);
+    piece = new Knight(side);
+    white.append(piece);
+    piece = new Bishop(side);
+    white.append(piece);
+    piece = new Queen(side);
+    white.append(piece);
+    piece = new King(side);
+    white.append(piece);
+    piece = new Bishop(side);
+    white.append(piece);
+    piece = new Knight(side);
+    white.append(piece);
+    piece = new Rook(side);
+    white.append(piece);
+
 }
 
 void ChessBoard::setUpBlack()
 {
-    //TODO NOW set up black pieces
+
+    Side::Values side = Side::Values::Black;
+
+    ChessPiece *piece;
+    piece = new Rook(side);
+    black.append(piece);
+    piece = new Knight(side);
+    black.append(piece);
+    piece = new Bishop(side);
+    black.append(piece);
+    piece = new Queen(side);
+    black.append(piece);
+    piece = new King(side);
+    black.append(piece);
+    piece = new Bishop(side);
+    black.append(piece);
+    piece = new Knight(side);
+    black.append(piece);
+    piece = new Rook(side);
+    black.append(piece);
+    for(int i = 0; i < 8; i++) {
+        piece = new Pawn(side);
+        black.append(piece);
+    }
 }

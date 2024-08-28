@@ -9,21 +9,32 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bishop.cpp \
     button.cpp \
     chessboard.cpp \
     chessbox.cpp \
     chesspiece.cpp \
     game.cpp \
     king.cpp \
-    main.cpp
+    knight.cpp \
+    main.cpp \
+    pawn.cpp \
+    queen.cpp \
+    rook.cpp
 
 HEADERS += \
+    bishop.h \
     button.h \
     chessboard.h \
     chessbox.h \
     chesspiece.h \
     game.h \
-    king.h
+    king.h \
+    knight.h \
+    pawn.h \
+    queen.h \
+    rook.h \
+    side.h
 
 FORMS +=
 

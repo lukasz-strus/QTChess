@@ -7,6 +7,9 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     createScene();
     displayTurn();
     displayCheck();
+
+    pieceToMove = NULL;
+    setTurn(Side::Values::White);
 }
 
 void Game::start()
@@ -67,12 +70,13 @@ void Game::displayDeadBlack()
 
 void Game::placeInDeadPlace(ChessPiece *piece)
 {
-    if(piece->getSide() == "WHITE") {
+    if(piece->getSide() == Side::Values::White)
+    {
         whiteDead.append(piece);
         King *g = dynamic_cast <King *>(piece);
         if(g){
 
-            check->setPlainText("Black Won");
+            check->setPlainText("Czarny gracz wygrał!");
             gameOver();
         }
         displayDeadWhite();
@@ -82,7 +86,7 @@ void Game::placeInDeadPlace(ChessPiece *piece)
         King *g = dynamic_cast <King *>(piece);
         if(g){
 
-            check->setPlainText("White Won");
+            check->setPlainText("Biały gracz wygrał!");
             gameOver();
         }
         displayDeadBlack();
@@ -93,7 +97,7 @@ void Game::placeInDeadPlace(ChessPiece *piece)
 void Game::gameOver()
 {
     //removeAll();
-    setTurn("WHITE");
+    setTurn(Side::Values::White);
     alivePiece.clear();
     chess->reset();
 
@@ -107,23 +111,31 @@ void Game::removeAll(){
     }
 }
 
-QString Game::getTurn()
+Side::Values Game::getTurn()
 {
     return turn;
 }
 
-void Game::setTurn(QString value)
+void Game::setTurn(Side::Values value)
 {
     turn = value;
 }
 
 void Game::changeTurn()
 {
-    if(getTurn() == "WHITE")
-        setTurn("BLACK");
+    QString turn;
+    if(getTurn() == Side::Values::White)
+    {
+        setTurn(Side::Values::Black);
+        turn = "czarnego";
+    }
     else
-        setTurn("WHITE");
-    turnDisplay->setPlainText("Turn : " + getTurn());
+    {
+        setTurn(Side::Values::White);
+        turn = "białego";
+    }
+
+    turnDisplay->setPlainText("Kolej gracza " + turn);
 }
 
 
@@ -153,7 +165,7 @@ void Game::createPlayButton()
 
 void Game::createQuitButton()
 {
-    Button * quitButton = new Button("Quit");
+    Button * quitButton = new Button("Wyjdź");
 
     int qxPos = width()/2 - quitButton->boundingRect().width()/2;
     int qyPos = 450;
