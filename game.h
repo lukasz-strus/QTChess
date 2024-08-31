@@ -30,6 +30,10 @@ public:
 
     Side::Values getTurn();
     void setTurn(Side::Values value);
+
+    Side::Values getFirstTurn();
+    void setFirstTurn(Side::Values value);
+
     void changeTurn();
 
     void gameOver(Side::Values value);
@@ -47,6 +51,13 @@ private:
     QList <ChessPiece *> blackDead;
     Side::Values turn;
 
+    int blackPoints;
+    int whitePoints;
+    QGraphicsTextItem* whiteInfo;
+    QGraphicsTextItem* blackInfo;
+
+    Side::Values firstTurn;
+
     void createScene();
     void displayTurn();
     void displayCheck();
@@ -54,6 +65,9 @@ private:
     void createTitle();
     void createPlayButton();
     void createQuitButton();
+
+    void setBlackPointsInfo();
+    void setWhitePointsInfo();
 };
 
 

@@ -8,8 +8,11 @@ Game::Game(QWidget *parent) : QGraphicsView(parent)
     displayTurn();
     displayCheck();
 
+    blackPoints = 0;
+    whitePoints = 0;
+
     pieceToMove = NULL;
-    setTurn(Side::Values::White);
+    setFirstTurn(Side::Values::White);
 }
 
 void Game::start()
@@ -19,25 +22,35 @@ void Game::start()
 
     addToScene(topText);
 
-    QGraphicsTextItem* whitePiece = new QGraphicsTextItem();
-    whitePiece->setPos(70,10);
-    whitePiece->setZValue(1);
-    whitePiece->setDefaultTextColor(Qt::white);
-    whitePiece->setFont(QFont("Arial",18));
-    whitePiece->setPlainText("Białe pionki");
-    addToScene(whitePiece);
+    whiteInfo = new QGraphicsTextItem();
+    whiteInfo->setPos(50,10);
+    whiteInfo->setZValue(1);
+    whiteInfo->setDefaultTextColor(Qt::white);
+    whiteInfo->setFont(QFont("Arial",18));
+    setWhitePointsInfo();
+    addToScene(whiteInfo);
 
-    QGraphicsTextItem *blackPiece = new QGraphicsTextItem();
-    blackPiece->setPos(1170,10);
-    blackPiece->setZValue(1);
-    blackPiece->setDefaultTextColor(Qt::black);
-    blackPiece->setFont(QFont("Arial",18));
-    blackPiece->setPlainText("Czarne pionki");
-    addToScene(blackPiece);
+    blackInfo = new QGraphicsTextItem();
+    blackInfo->setPos(1150,10);
+    blackInfo->setZValue(1);
+    blackInfo->setDefaultTextColor(Qt::black);
+    blackInfo->setFont(QFont("Arial",18));
+    setBlackPointsInfo();
+    addToScene(blackInfo);
 
     addToScene(bottomText);
 
     chess->addChessPiece();
+}
+
+void Game::setBlackPointsInfo()
+{
+    blackInfo->setPlainText("GRACZ CZARNY: " + QString::number(blackPoints));
+}
+
+void Game::setWhitePointsInfo()
+{
+    whiteInfo->setPlainText("GRACZ BIAŁY: " + QString::number(whitePoints));
 }
 
 void Game::displayDeadWhite()
@@ -91,12 +104,29 @@ void Game::placeInDeadPlace(ChessPiece *piece)
 void Game::gameOver(Side::Values value)
 {
     if(value == Side::Values::White)
-        topText->setPlainText("Gracz czarny wygrał!");
+    {
+        bottomText->setPlainText("Gracz czarny wygrał!");
+        blackPoints++;
+        setBlackPointsInfo();
+    }
     else
-        topText->setPlainText("Gracz biały wygrał!");
+    {
+        bottomText->setPlainText("Gracz biały wygrał!");
+        whitePoints++;
+        setWhitePointsInfo();
+    }
 
-    bottomText->setPlainText("");
-    setTurn(Side::Values::White);
+    if(getFirstTurn() == Side::Values::White)
+    {
+        setFirstTurn(Side::Values::Black);
+        topText->setPlainText("Kolej gracza czarnego");
+    }
+    else
+    {
+        setFirstTurn(Side::Values::White);
+        topText->setPlainText("Kolej gracza białego");
+    }
+
     alivePiece.clear();
     chess->reset();
 }
@@ -109,6 +139,17 @@ Side::Values Game::getTurn()
 void Game::setTurn(Side::Values value)
 {
     turn = value;
+}
+
+Side::Values Game::getFirstTurn()
+{
+    return firstTurn;
+}
+
+void Game::setFirstTurn(Side::Values value)
+{
+    firstTurn = value;
+    setTurn(value);
 }
 
 void Game::changeTurn()
