@@ -28,9 +28,8 @@ void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
         if(this->getChessPieceColor() == game->pieceToMove->getSideAsString())
             return;
 
-        //removing the eaten piece
         QList <ChessBox *> movLoc = game->pieceToMove->moveLocation();
-        //TO make sure the selected box is in move zone
+
         int check = 0;
         for(size_t i = 0, n = movLoc.size(); i < n;i++) {
             if(movLoc[i] == this) {
@@ -38,32 +37,30 @@ void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
             }
         }
-        // if not prsent return
-        if(check == 0)
-            return;
-        //change the color back to normal
+
+        if(check == 0) return;
+
         game->pieceToMove->decolor();
-        //make the first move false applicable for pawn only
+
         game->pieceToMove->firstMove = false;
-        //this is to eat or consume the enemy present inn the movable region
+
         if(this->getHasChessPiece()){
             this->currentPiece->setIsPlaced(false);
             this->currentPiece->setCurrentBox(NULL);
             game->placeInDeadPlace(this->currentPiece);
 
         }
-        //changing the new stat and resetting the previous left region
+
         game->pieceToMove->getCurrentBox()->setHasChessPiece(false);
         game->pieceToMove->getCurrentBox()->currentPiece = NULL;
         game->pieceToMove->getCurrentBox()->resetOriginalColor();
         placePiece(game->pieceToMove);
 
         game->pieceToMove = NULL;
-        //changing turn
+
         game->changeTurn();
         checkForCheck();
     }
-    //Selecting couterpart of the chessPiece
     else if(this->getHasChessPiece())
     {
         this->currentPiece->mousePressEvent(event);
@@ -96,18 +93,13 @@ void ChessBox::checkForCheck()
                 bList[j]->setColor(Qt::blue);
                 pList[i]->getCurrentBox()->setColor(Qt::darkRed);
 
-                if(!game->check->isVisible())
-                    game->check->setVisible(true);
+                if(!game->bottomText->isVisible())
+                    game->bottomText->setVisible(true);
                 else
                 {
                     bList[j]->resetOriginalColor();
                     pList[i]->getCurrentBox()->resetOriginalColor();
-
-                    if(p->getSide() == Side::Values::White)
-                        QMessageBox::information(nullptr, "Koniec gry!", "Gracz czarny wygrał       ");
-                    else
-                        QMessageBox::information(nullptr, "Koniec gry!", "Gracz biały wygrał       ");
-                    game->gameOver();
+                    game->gameOver(p->getSide());
                 }
                 c++;
 
@@ -117,7 +109,7 @@ void ChessBox::checkForCheck()
 
     }
     if(!c){
-        game->check->setVisible(false);
+        game->bottomText->setVisible(false);
         for(size_t i = 0,n=pList.size(); i < n; i++ )
             pList[i]->getCurrentBox()->resetOriginalColor();
     }

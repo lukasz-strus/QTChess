@@ -17,7 +17,7 @@ void Game::start()
     for(size_t i =0, n = listG.size(); i < n; i++)
         removeFromScene(listG[i]);
 
-    addToScene(turnDisplay);
+    addToScene(topText);
 
     QGraphicsTextItem* whitePiece = new QGraphicsTextItem();
     whitePiece->setPos(70,10);
@@ -35,7 +35,7 @@ void Game::start()
     blackPiece->setPlainText("Czarne pionki");
     addToScene(blackPiece);
 
-    addToScene(check);
+    addToScene(bottomText);
 
     chess->addChessPiece();
 }
@@ -70,45 +70,35 @@ void Game::displayDeadBlack()
 
 void Game::placeInDeadPlace(ChessPiece *piece)
 {
-    if(piece->getSide() == Side::Values::White)
+    Side::Values side = piece->getSide();
+    if(side == Side::Values::White)
     {
         whiteDead.append(piece);
         King *g = dynamic_cast <King *>(piece);
-        if(g){
-
-            check->setPlainText("Czarny gracz wygrał!");
-            gameOver();
-        }
+        if(g) gameOver(side);
         displayDeadWhite();
     }
-    else{
+    else
+    {
         blackDead.append(piece);
         King *g = dynamic_cast <King *>(piece);
-        if(g){
-
-            check->setPlainText("Biały gracz wygrał!");
-            gameOver();
-        }
+        if(g) gameOver(side);
         displayDeadBlack();
     }
     alivePiece.removeAll(piece);
 }
 
-void Game::gameOver()
+void Game::gameOver(Side::Values value)
 {
-    //removeAll();
+    if(value == Side::Values::White)
+        topText->setPlainText("Gracz czarny wygrał!");
+    else
+        topText->setPlainText("Gracz biały wygrał!");
+
+    bottomText->setPlainText("");
     setTurn(Side::Values::White);
     alivePiece.clear();
     chess->reset();
-
-}
-
-void Game::removeAll(){
-    QList<QGraphicsItem*> itemsList = scene->items();
-    for(size_t i = 0, n = itemsList.size();i<n;i++) {
-        if(itemsList[i]!=check)
-            removeFromScene(itemsList[i]);
-    }
 }
 
 Side::Values Game::getTurn()
@@ -135,7 +125,7 @@ void Game::changeTurn()
         turn = "białego";
     }
 
-    turnDisplay->setPlainText("Kolej gracza " + turn);
+    topText->setPlainText("Kolej gracza " + turn);
 }
 
 
@@ -242,23 +232,23 @@ void Game::removeFromScene(QGraphicsItem *item)
 
 void Game::displayCheck()
 {
-    check = new QGraphicsTextItem();
-    check->setPos(width()/2-100,860);
-    check->setZValue(4);
-    check->setDefaultTextColor(Qt::red);
-    check->setFont(QFont("",18));
-    check->setPlainText("CHECK!");
-    check->setVisible(false);
+    bottomText = new QGraphicsTextItem();
+    bottomText->setPos(width()/2-100,860);
+    bottomText->setZValue(4);
+    bottomText->setDefaultTextColor(Qt::red);
+    bottomText->setFont(QFont("",18));
+    bottomText->setPlainText("CHECK!");
+    bottomText->setVisible(false);
 }
 
 void Game::displayTurn()
 {
-    turnDisplay = new QGraphicsTextItem();
-    turnDisplay->setPos(width()/2-100,10);
-    turnDisplay->setZValue(1);
-    turnDisplay->setDefaultTextColor(Qt::red);
-    turnDisplay->setFont(QFont("Arial",18));
-    turnDisplay->setPlainText("Kolej gracza białego");
+    topText = new QGraphicsTextItem();
+    topText->setPos(width()/2-100,10);
+    topText->setZValue(1);
+    topText->setDefaultTextColor(Qt::red);
+    topText->setFont(QFont("Arial",18));
+    topText->setPlainText("Kolej gracza białego");
 
 }
 

@@ -13,7 +13,7 @@ class Game:public QGraphicsView
 public:
     Game(QWidget *parent = 0);
 
-    QGraphicsTextItem *check;
+    QGraphicsTextItem *bottomText;
     ChessBox *collection[8][8];
     QList <ChessPiece *> alivePiece;
     ChessPiece *pieceToMove;
@@ -32,7 +32,7 @@ public:
     void setTurn(Side::Values value);
     void changeTurn();
 
-    void gameOver();
+    void gameOver(Side::Values value);
     void removeAll();
 public slots:
     void start();
@@ -40,7 +40,7 @@ public slots:
 private:
     QGraphicsScene *scene;
     QList <QGraphicsItem *> listG;
-    QGraphicsTextItem * turnDisplay;
+    QGraphicsTextItem * topText;
     ChessBoard *chess;
     QGraphicsRectItem * deadHolder;
     QList <ChessPiece *> whiteDead;
@@ -54,7 +54,6 @@ private:
     void createTitle();
     void createPlayButton();
     void createQuitButton();
-
 };
 
 
