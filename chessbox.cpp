@@ -24,36 +24,34 @@ void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if(game->pieceToMove)
     {
-
-        if(this->getChessPieceColor() == game->pieceToMove->getSideAsString())
+        if(this->getChessPieceColor() == game->pieceToMove->getChessModel()->getSideAsString())
             return;
 
-        QList <ChessBox *> movLoc = game->pieceToMove->moveLocation();
+        QList <ChessBox *> movLoc = game->pieceToMove->getChessModel()->moveLocation();
 
         int check = 0;
         for(size_t i = 0, n = movLoc.size(); i < n;i++) {
             if(movLoc[i] == this) {
                 check++;
-
             }
         }
 
         if(check == 0) return;
 
         game->pieceToMove->decolor();
+        game->pieceToMove->getChessModel()->firstMove = false;
 
-        game->pieceToMove->firstMove = false;
 
         if(this->getHasChessPiece()){
-            this->currentPiece->setIsPlaced(false);
-            this->currentPiece->setCurrentBox(NULL);
+            this->currentPiece->getChessModel()->setIsPlaced(false);
+            this->currentPiece->getChessModel()->setCurrentBox(NULL);
             game->placeInDeadPlace(this->currentPiece);
 
         }
 
-        game->pieceToMove->getCurrentBox()->setHasChessPiece(false);
-        game->pieceToMove->getCurrentBox()->currentPiece = NULL;
-        game->pieceToMove->getCurrentBox()->resetOriginalColor();
+        game->pieceToMove->getChessModel()->getCurrentBox()->setHasChessPiece(false);
+        game->pieceToMove->getChessModel()->getCurrentBox()->currentPiece = NULL;
+        game->pieceToMove->getChessModel()->getCurrentBox()->resetOriginalColor();
         placePiece(game->pieceToMove);
 
         game->pieceToMove = NULL;
@@ -78,28 +76,28 @@ void ChessBox::checkForCheck()
         King * p = dynamic_cast<King *> (pList[i]);
         if(p) continue;
 
-        pList[i]->moves();
+        pList[i]->getChessModel()->moves();
         pList[i]->decolor();
 
-        QList <ChessBox *> bList = pList[i]->moveLocation();
+        QList <ChessBox *> bList = pList[i]->getChessModel()->moveLocation();
 
         for(size_t j = 0,n = bList.size(); j < n; j ++)
         {
             King * p = dynamic_cast<King *> (bList[j]->currentPiece);
             if(p)
             {
-                if(p->getSide() == pList[i]->getSide()) continue;
+                if(p->getChessModel()->getSide() == pList[i]->getChessModel()->getSide()) continue;
 
                 bList[j]->setColor(Qt::blue);
-                pList[i]->getCurrentBox()->setColor(Qt::darkRed);
+                pList[i]->getChessModel()->getCurrentBox()->setColor(Qt::darkRed);
 
                 if(!game->bottomText->isVisible())
                     game->bottomText->setVisible(true);
                 else
                 {
                     bList[j]->resetOriginalColor();
-                    pList[i]->getCurrentBox()->resetOriginalColor();
-                    game->gameOver(p->getSide());
+                    pList[i]->getChessModel()->getCurrentBox()->resetOriginalColor();
+                    game->gameOver(p->getChessModel()->getSide());
                 }
                 c++;
 
@@ -111,7 +109,7 @@ void ChessBox::checkForCheck()
     if(!c){
         game->bottomText->setVisible(false);
         for(size_t i = 0,n=pList.size(); i < n; i++ )
-            pList[i]->getCurrentBox()->resetOriginalColor();
+            pList[i]->getChessModel()->getCurrentBox()->resetOriginalColor();
     }
 }
 
@@ -121,7 +119,7 @@ void ChessBox::placePiece(ChessPiece *piece)
         x()+50- piece->pixmap().width()/2,
         y()+50-piece->pixmap().width()/2);
 
-    piece->setCurrentBox(this);
+    piece->getChessModel()->setCurrentBox(this);
     setHasChessPiece(true,piece);
     currentPiece = piece;
 }
@@ -135,7 +133,7 @@ void ChessBox::setHasChessPiece(bool value, ChessPiece *piece)
 {
     hasChessPiece = value;
     if(value)
-        setChessPieceColor(piece->getSideAsString());
+        setChessPieceColor(piece->getChessModel()->getSideAsString());
     else
         setChessPieceColor("NONE");
 }
@@ -180,16 +178,16 @@ void ChessBoard::reset() {
             if(i < 2) {
 
                 box->placePiece(black[k]);
-                black[k]->setIsPlaced(true);
-                black[k]->firstMove = true;
+                black[k]->getChessModel()->setIsPlaced(true);
+                black[k]->getChessModel()->firstMove = true;
                 game->alivePiece.append(black[k++]);
 
             }
             if(i > 5) {
 
                 box->placePiece(white[h]);
-                white[h]->setIsPlaced(true);
-                white[h]->firstMove = true;
+                white[h]->getChessModel()->setIsPlaced(true);
+                white[h]->getChessModel()->firstMove = true;
                 game->alivePiece.append(white[h++]);
 
             }

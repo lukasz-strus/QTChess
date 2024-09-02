@@ -83,7 +83,7 @@ void Game::displayDeadBlack()
 
 void Game::placeInDeadPlace(ChessPiece *piece)
 {
-    Side::Values side = piece->getSide();
+    Side::Values side = piece->getChessModel()->getSide();
     if(side == Side::Values::White)
     {
         whiteDead.append(piece);

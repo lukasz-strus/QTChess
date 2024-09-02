@@ -2,38 +2,24 @@
 #define CHESSPIECE_H
 #include <QGraphicsPixmapItem>
 #include "side.h"
+#include "chesspiecemodel.h"
 
-class ChessBox;
 class ChessPiece:public QGraphicsPixmapItem
 {
 public:
     ChessPiece(Side::Values team, QGraphicsItem *parent = 0);
 
-     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    ChessPieceModel *getChessModel();
 
-     bool firstMove;
-     virtual void moves() = 0;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-     ChessBox *getCurrentBox();
-     void setCurrentBox(ChessBox *box);
+    void decolor();
 
-     bool getIsPlaced();
-     void setIsPlaced(bool value);
-
-     Side::Values getSide();
-     QString getSideAsString();
-     void setSide(Side::Values value);
-
-     QList <ChessBox *> moveLocation();
-
-     void decolor();
-
-     bool boxSetting(ChessBox *box);
  protected:
-     ChessBox *currentBox;
      Side::Values side;
-     bool isPlaced;
-     QList <ChessBox *> location;
+     ChessPieceModel *model;
+
+     void setModel(ChessPieceModel *model);
 };
 
 #endif // CHESSPIECE_H

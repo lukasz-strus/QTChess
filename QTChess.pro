@@ -10,30 +10,44 @@ CONFIG += c++17
 
 SOURCES += \
     bishop.cpp \
+    bishopmodel.cpp \
     button.cpp \
     chessboard.cpp \
     chessbox.cpp \
     chesspiece.cpp \
+    chesspiecemodel.cpp \
     game.cpp \
     king.cpp \
+    kingmodel.cpp \
     knight.cpp \
+    knightmodel.cpp \
     main.cpp \
     pawn.cpp \
+    pawnmodel.cpp \
     queen.cpp \
-    rook.cpp
+    queenmodel.cpp \
+    rook.cpp \
+    rookmodel.cpp
 
 HEADERS += \
     bishop.h \
+    bishopmodel.h \
     button.h \
     chessboard.h \
     chessbox.h \
     chesspiece.h \
+    chesspiecemodel.h \
     game.h \
     king.h \
+    kingmodel.h \
     knight.h \
+    knightmodel.h \
     pawn.h \
+    pawnmodel.h \
     queen.h \
+    queenmodel.h \
     rook.h \
+    rookmodel.h \
     side.h
 
 FORMS +=
