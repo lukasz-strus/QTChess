@@ -1,13 +1,13 @@
-#include "queen.h"
+#include "queenview.h"
 #include "queenmodel.h"
 
-Queen::Queen(Side::Values team, QGraphicsItem *parent):ChessPiece(team,parent)
+QueenView::QueenView(Side::Values team, QGraphicsItem *parent):ChessPieceView(team,parent)
 {
     setImage();
     setModel(new QueenModel(team, parent));
 }
 
-void Queen::setImage()
+void QueenView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/queen_white"));

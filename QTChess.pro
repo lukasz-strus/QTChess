@@ -9,45 +9,45 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    bishop.cpp \
     bishopmodel.cpp \
+    bishopview.cpp \
     button.cpp \
     chessboard.cpp \
     chessbox.cpp \
-    chesspiece.cpp \
     chesspiecemodel.cpp \
+    chesspieceview.cpp \
     game.cpp \
-    king.cpp \
     kingmodel.cpp \
-    knight.cpp \
+    kingview.cpp \
     knightmodel.cpp \
+    knightview.cpp \
     main.cpp \
-    pawn.cpp \
     pawnmodel.cpp \
-    queen.cpp \
+    pawnview.cpp \
     queenmodel.cpp \
-    rook.cpp \
-    rookmodel.cpp
+    queenview.cpp \
+    rookmodel.cpp \
+    rookview.cpp
 
 HEADERS += \
-    bishop.h \
     bishopmodel.h \
+    bishopview.h \
     button.h \
     chessboard.h \
     chessbox.h \
-    chesspiece.h \
     chesspiecemodel.h \
+    chesspieceview.h \
     game.h \
-    king.h \
     kingmodel.h \
-    knight.h \
+    kingview.h \
     knightmodel.h \
-    pawn.h \
+    knightview.h \
     pawnmodel.h \
-    queen.h \
+    pawnview.h \
     queenmodel.h \
-    rook.h \
+    queenview.h \
     rookmodel.h \
+    rookview.h \
     side.h
 
 FORMS +=

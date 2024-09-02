@@ -1,13 +1,13 @@
-#include "bishop.h"
+#include "bishopview.h"
 #include "bishopmodel.h"
 
-Bishop::Bishop(Side::Values team, QGraphicsItem *parent):ChessPiece(team,parent)
+BishopView::BishopView(Side::Values team, QGraphicsItem *parent):ChessPieceView(team,parent)
 {
     setImage();
     setModel(new BishopModel(team, parent));
 }
 
-void Bishop::setImage()
+void BishopView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/bishop_white"));

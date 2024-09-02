@@ -1,16 +1,16 @@
 <RCC>
     <qresource prefix="/pieces">
         <file alias="rook_white">rook1.png</file>
-        <file alias="rook_black">rook.png</file>
+        <file alias="rook_black">rookview.png</file>
         <file alias="queen_white">queen1.png</file>
-        <file alias="queen_black">queen.png</file>
+        <file alias="queen_black">queenview.png</file>
         <file alias="pawn_white">pawn1.png</file>
-        <file alias="pawn_black">pawn.png</file>
+        <file alias="pawn_black">pawnview.png</file>
         <file alias="king_white">king1.png</file>
-        <file alias="king_black">king.png</file>
+        <file alias="king_black">kingview.png</file>
         <file alias="horse_white">horse1.png</file>
         <file alias="horse_black">horse.png</file>
         <file alias="bishop_white">bishop1.png</file>
-        <file alias="bishop_black">bishop.png</file>
+        <file alias="bishop_black">bishopview.png</file>
     </qresource>
 </RCC>

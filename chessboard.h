@@ -1,7 +1,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 #include <QGraphicsRectItem>
-#include "chesspiece.h"
+#include "chesspieceview.h"
 
 class ChessBoard
 {
@@ -17,8 +17,8 @@ public:
     void reset();
 
 private:
-    QList <ChessPiece *> white;
-    QList <ChessPiece *> black;
+    QList <ChessPieceView *> white;
+    QList <ChessPieceView *> black;
 };
 
 #endif // CHESSBOARD_H

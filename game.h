@@ -15,15 +15,15 @@ public:
 
     QGraphicsTextItem *bottomText;
     ChessBox *collection[8][8];
-    QList <ChessPiece *> alivePiece;
-    ChessPiece *pieceToMove;
+    QList <ChessPieceView *> alivePiece;
+    ChessPieceView *pieceToMove;
 
     void drawChessBoard();
     void displayMainMenu();
     void drawDeadHolder(int x, int y,QColor color);
     void displayDeadWhite();
     void displayDeadBlack();
-    void placeInDeadPlace(ChessPiece *piece);
+    void placeInDeadPlace(ChessPieceView *piece);
 
     void addToScene(QGraphicsItem *item);
     void removeFromScene(QGraphicsItem *item);
@@ -47,8 +47,8 @@ private:
     QGraphicsTextItem * topText;
     ChessBoard *chess;
     QGraphicsRectItem * deadHolder;
-    QList <ChessPiece *> whiteDead;
-    QList <ChessPiece *> blackDead;
+    QList <ChessPieceView *> whiteDead;
+    QList <ChessPieceView *> blackDead;
     Side::Values turn;
 
     int blackPoints;

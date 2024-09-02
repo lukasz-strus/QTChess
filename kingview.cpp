@@ -1,13 +1,13 @@
-#include "king.h"
+#include "kingview.h"
 #include "kingmodel.h"
 
-King::King(Side::Values team, QGraphicsItem *parent):ChessPiece(team,parent)
+KingView::KingView(Side::Values team, QGraphicsItem *parent):ChessPieceView(team,parent)
 {
     setImage();
     setModel(new KingModel(team, parent));
 }
 
-void King::setImage()
+void KingView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/king_white"));

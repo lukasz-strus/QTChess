@@ -1,6 +1,6 @@
 #include "kingmodel.h"
 #include "game.h"
-#include "pawn.h"
+#include "pawnview.h"
 
 extern Game *game;
 KingModel::KingModel(
@@ -136,7 +136,7 @@ void KingModel::downRightMove(int row, int col, QString team)
 
 void KingModel::findUnSafeLocation()
 {
-    QList <ChessPiece *> pList = game->alivePiece;
+    QList <ChessPieceView *> pList = game->alivePiece;
     for(size_t i = 0,n = pList.size(); i < n; i++)
     {
         if(pList[i]->getChessModel()->getSide() != this->getSide())
@@ -144,7 +144,7 @@ void KingModel::findUnSafeLocation()
             QList <ChessBox *> bList = pList[i]->getChessModel()->moveLocation();
 
             for(size_t j = 0, n = bList.size(); j < n; j++) {
-                Pawn *c = dynamic_cast<Pawn *> (pList[i]) ;
+                PawnView *c = dynamic_cast<PawnView *> (pList[i]) ;
                 if(c)
                     continue;
                 for(size_t k = 0, n = location.size(); k < n; k++) {

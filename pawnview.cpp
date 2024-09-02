@@ -1,13 +1,13 @@
-#include "pawn.h"
+#include "pawnview.h"
 #include "pawnmodel.h"
 
-Pawn::Pawn(Side::Values team,QGraphicsItem *parent):ChessPiece(team,parent)
+PawnView::PawnView(Side::Values team,QGraphicsItem *parent):ChessPieceView(team,parent)
 {
     setImage();
     setModel(new PawnModel(team, parent));
 }
 
-void Pawn::setImage()
+void PawnView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/pawn_white"));

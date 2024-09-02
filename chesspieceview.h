@@ -1,13 +1,13 @@
-#ifndef CHESSPIECE_H
-#define CHESSPIECE_H
+#ifndef CHESSPIECEVIEW_H
+#define CHESSPIECEVIEW_H
 #include <QGraphicsPixmapItem>
 #include "side.h"
 #include "chesspiecemodel.h"
 
-class ChessPiece:public QGraphicsPixmapItem
+class ChessPieceView:public QGraphicsPixmapItem
 {
 public:
-    ChessPiece(Side::Values team, QGraphicsItem *parent = 0);
+    ChessPieceView(Side::Values team, QGraphicsItem *parent = 0);
 
     ChessPieceModel *getChessModel();
 

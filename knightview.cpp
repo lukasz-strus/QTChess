@@ -1,13 +1,13 @@
-#include "knight.h"
+#include "knightview.h"
 #include "knightmodel.h"
 
-Knight::Knight(Side::Values team, QGraphicsItem *parent):ChessPiece(team, parent)
+KnightView::KnightView(Side::Values team, QGraphicsItem *parent):ChessPieceView(team, parent)
 {
     setImage();
     setModel(new KnightModel(team, parent));
 }
 
-void Knight::setImage()
+void KnightView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/horse_white"));

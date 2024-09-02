@@ -1,14 +1,14 @@
-#include "rook.h"
+#include "rookview.h"
 #include "rookmodel.h"
 
-Rook::Rook(Side::Values team,QGraphicsItem *parent):ChessPiece(team, parent)
+RookView::RookView(Side::Values team,QGraphicsItem *parent):ChessPieceView(team, parent)
 {
     setImage();
     setModel(new RookModel(team, parent));
 }
 
 
-void Rook::setImage()
+void RookView::setImage()
 {
     if(side == Side::Values::White)
         setPixmap(QPixmap(":/pieces/rook_white"));

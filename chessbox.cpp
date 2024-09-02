@@ -1,6 +1,6 @@
 #include "chessbox.h"
 #include "game.h"
-#include "king.h"
+#include "kingview.h"
 #include <QMessageBox>
 
 extern Game *game;
@@ -68,12 +68,12 @@ void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void ChessBox::checkForCheck()
 {
     int c = 0;
-    QList <ChessPiece *> pList = game->alivePiece;
+    QList <ChessPieceView *> pList = game->alivePiece;
 
     for(size_t i = 0,n=pList.size(); i < n; i++ )
     {
 
-        King * p = dynamic_cast<King *> (pList[i]);
+        KingView * p = dynamic_cast<KingView *> (pList[i]);
         if(p) continue;
 
         pList[i]->getChessModel()->moves();
@@ -83,7 +83,7 @@ void ChessBox::checkForCheck()
 
         for(size_t j = 0,n = bList.size(); j < n; j ++)
         {
-            King * p = dynamic_cast<King *> (bList[j]->currentPiece);
+            KingView * p = dynamic_cast<KingView *> (bList[j]->currentPiece);
             if(p)
             {
                 if(p->getChessModel()->getSide() == pList[i]->getChessModel()->getSide()) continue;
@@ -113,7 +113,7 @@ void ChessBox::checkForCheck()
     }
 }
 
-void ChessBox::placePiece(ChessPiece *piece)
+void ChessBox::placePiece(ChessPieceView *piece)
 {
     piece->setPos(
         x()+50- piece->pixmap().width()/2,
@@ -129,7 +129,7 @@ bool ChessBox::getHasChessPiece()
     return hasChessPiece;
 }
 
-void ChessBox::setHasChessPiece(bool value, ChessPiece *piece)
+void ChessBox::setHasChessPiece(bool value, ChessPieceView *piece)
 {
     hasChessPiece = value;
     if(value)

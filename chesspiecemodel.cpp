@@ -1,5 +1,5 @@
 #include "chesspiecemodel.h"
-#include "king.h"
+#include "kingview.h"
 #include "game.h"
 
 extern Game *game;
@@ -56,7 +56,7 @@ void ChessPieceModel::setSide(Side::Values value)
 bool ChessPieceModel::boxSetting(ChessBox *box)
 {
     if(box->getHasChessPiece()) {
-        King *q = dynamic_cast<King*>(location.last()->currentPiece);
+        KingView *q = dynamic_cast<KingView*>(location.last()->currentPiece);
         if(q){
             box->setColor(Qt::blue);
         }

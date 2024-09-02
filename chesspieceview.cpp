@@ -1,26 +1,26 @@
-#include "chesspiece.h"
+#include "chesspieceview.h"
 #include "chesspiecemodel.h"
 #include "game.h"
 
 extern Game *game;
-ChessPiece::ChessPiece(
+ChessPieceView::ChessPieceView(
     Side::Values team,
     QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 {
     side = team;
 }
 
-void ChessPiece::setModel(ChessPieceModel *model)
+void ChessPieceView::setModel(ChessPieceModel *model)
 {
     this->model = model;
 }
 
-ChessPieceModel *ChessPiece::getChessModel()
+ChessPieceModel *ChessPieceView::getChessModel()
 {
     return model;
 }
 
-void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void ChessPieceView::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(this == game->pieceToMove){
         game->pieceToMove->model->getCurrentBox()->resetOriginalColor();
@@ -45,7 +45,7 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 
 
-void ChessPiece::decolor()
+void ChessPieceView::decolor()
 {
     for(size_t i = 0, n = model->location.size(); i < n;i++) {
         model->location[i]->resetOriginalColor();

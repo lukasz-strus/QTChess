@@ -1,6 +1,6 @@
 #include "game.h"
 #include "button.h"
-#include "king.h"
+#include "kingview.h"
 
 Game::Game(QWidget *parent) : QGraphicsView(parent)
 {
@@ -81,20 +81,20 @@ void Game::displayDeadBlack()
     }
 }
 
-void Game::placeInDeadPlace(ChessPiece *piece)
+void Game::placeInDeadPlace(ChessPieceView *piece)
 {
     Side::Values side = piece->getChessModel()->getSide();
     if(side == Side::Values::White)
     {
         whiteDead.append(piece);
-        King *g = dynamic_cast <King *>(piece);
+        KingView *g = dynamic_cast <KingView *>(piece);
         if(g) gameOver(side);
         displayDeadWhite();
     }
     else
     {
         blackDead.append(piece);
-        King *g = dynamic_cast <King *>(piece);
+        KingView *g = dynamic_cast <KingView *>(piece);
         if(g) gameOver(side);
         displayDeadBlack();
     }

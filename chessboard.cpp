@@ -1,12 +1,12 @@
 #include "chessboard.h"
 #include "chessbox.h"
 #include "game.h"
-#include "queen.h"
-#include "rook.h"
-#include "pawn.h"
-#include "king.h"
-#include "knight.h"
-#include "bishop.h"
+#include "queenview.h"
+#include "rookview.h"
+#include "pawnview.h"
+#include "kingview.h"
+#include "knightview.h"
+#include "bishopview.h"
 
 extern Game *game;
 ChessBoard::ChessBoard()
@@ -66,26 +66,26 @@ void ChessBoard::setUpWhite()
 {
     Side::Values side = Side::Values::White;
 
-    ChessPiece *piece;
+    ChessPieceView *piece;
     for(int i = 0; i < 8; i++) {
-        piece = new Pawn(side);
+        piece = new PawnView(side);
         white.append(piece);
     }
-    piece = new Rook(side);
+    piece = new RookView(side);
     white.append(piece);
-    piece = new Knight(side);
+    piece = new KnightView(side);
     white.append(piece);
-    piece = new Bishop(side);
+    piece = new BishopView(side);
     white.append(piece);
-    piece = new Queen(side);
+    piece = new QueenView(side);
     white.append(piece);
-    piece = new King(side);
+    piece = new KingView(side);
     white.append(piece);
-    piece = new Bishop(side);
+    piece = new BishopView(side);
     white.append(piece);
-    piece = new Knight(side);
+    piece = new KnightView(side);
     white.append(piece);
-    piece = new Rook(side);
+    piece = new RookView(side);
     white.append(piece);
 
 }
@@ -95,25 +95,25 @@ void ChessBoard::setUpBlack()
 
     Side::Values side = Side::Values::Black;
 
-    ChessPiece *piece;
-    piece = new Rook(side);
+    ChessPieceView *piece;
+    piece = new RookView(side);
     black.append(piece);
-    piece = new Knight(side);
+    piece = new KnightView(side);
     black.append(piece);
-    piece = new Bishop(side);
+    piece = new BishopView(side);
     black.append(piece);
-    piece = new Queen(side);
+    piece = new QueenView(side);
     black.append(piece);
-    piece = new King(side);
+    piece = new KingView(side);
     black.append(piece);
-    piece = new Bishop(side);
+    piece = new BishopView(side);
     black.append(piece);
-    piece = new Knight(side);
+    piece = new KnightView(side);
     black.append(piece);
-    piece = new Rook(side);
+    piece = new RookView(side);
     black.append(piece);
     for(int i = 0; i < 8; i++) {
-        piece = new Pawn(side);
+        piece = new PawnView(side);
         black.append(piece);
     }
 }

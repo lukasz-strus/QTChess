@@ -2,7 +2,7 @@
 #define CHESSBOX_H
 #include <QGraphicsRectItem>
 #include <QBrush>
-#include "chesspiece.h"
+#include "chesspieceview.h"
 
 class ChessBox:public QGraphicsRectItem
 {
@@ -14,18 +14,18 @@ public:
     int rowLoc;
     int colLoc;
 
-    ChessPiece * currentPiece;
+    ChessPieceView * currentPiece;
 
     void resetOriginalColor();
     void setOriginalColor(QColor value);
     void setColor(QColor value);
 
-    void placePiece(ChessPiece *piece);
+    void placePiece(ChessPieceView *piece);
 
     void checkForCheck();
 
     bool getHasChessPiece();
-    void setHasChessPiece(bool value, ChessPiece *piece = 0);
+    void setHasChessPiece(bool value, ChessPieceView *piece = 0);
 
     QString getChessPieceColor() ;
     void setChessPieceColor(QString value);
