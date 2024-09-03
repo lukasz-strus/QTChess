@@ -16,53 +16,84 @@ ChessBox::ChessBox(QGraphicsItem *parent):QGraphicsRectItem(parent)
 
 void ChessBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(currentPiece == game->pieceToMove && currentPiece){
-
-        currentPiece->mousePressEvent(event);
-        return;
-    }
+    if(deselect(event)) return;
 
     if(game->pieceToMove)
     {
-        if(this->getChessPieceColor() == game->pieceToMove->getChessModel()->getSideAsString())
-            return;
+        if(sameTeam()) return;
+        if(!selectedBoxIsInMoveZone()) return;
 
-        QList <ChessBox *> movLoc = game->pieceToMove->getChessModel()->moveLocation();
+        if(this->getHasChessPiece()) consumePiece();
 
-        int check = 0;
-        for(size_t i = 0, n = movLoc.size(); i < n;i++) {
-            if(movLoc[i] == this) {
-                check++;
-            }
-        }
-
-        if(check == 0) return;
-
-        game->pieceToMove->decolor();
-        game->pieceToMove->getChessModel()->firstMove = false;
-
-
-        if(this->getHasChessPiece()){
-            this->currentPiece->getChessModel()->setIsPlaced(false);
-            this->currentPiece->getChessModel()->setCurrentBox(NULL);
-            game->placeInDeadPlace(this->currentPiece);
-
-        }
-
-        game->pieceToMove->getChessModel()->getCurrentBox()->setHasChessPiece(false);
-        game->pieceToMove->getChessModel()->getCurrentBox()->currentPiece = NULL;
-        game->pieceToMove->getChessModel()->getCurrentBox()->resetOriginalColor();
-        placePiece(game->pieceToMove);
-
-        game->pieceToMove = NULL;
+        movePiece();
 
         game->changeTurn();
         checkForCheck();
     }
     else if(this->getHasChessPiece())
     {
-        this->currentPiece->mousePressEvent(event);
+        select(event);
     }
+}
+
+bool ChessBox::deselect(QGraphicsSceneMouseEvent *event)
+{
+    if(currentPiece == game->pieceToMove && currentPiece)
+    {
+        currentPiece->mousePressEvent(event);
+        return true;
+    }
+
+    return false;
+}
+
+void ChessBox::select(QGraphicsSceneMouseEvent *event)
+{
+    this->currentPiece->mousePressEvent(event);
+}
+
+bool ChessBox::sameTeam()
+{
+    if(this->getChessPieceColor() == game->pieceToMove->getChessModel()->getSideAsString())
+        return true;
+
+    return false;
+}
+
+bool ChessBox::selectedBoxIsInMoveZone()
+{
+    QList <ChessBox *> movLoc = game->pieceToMove->getChessModel()->moveLocation();
+
+    int check = 0;
+    for(size_t i = 0, n = movLoc.size(); i < n;i++) {
+        if(movLoc[i] == this) {
+            check++;
+        }
+    }
+
+    if(check == 0)
+        return false;
+
+    return true;
+}
+
+void ChessBox::consumePiece()
+{
+    this->currentPiece->getChessModel()->setIsPlaced(false);
+    this->currentPiece->getChessModel()->setCurrentBox(NULL);
+    game->placeInDeadPlace(this->currentPiece);
+}
+
+void ChessBox::movePiece()
+{
+    game->pieceToMove->decolor();
+    game->pieceToMove->getChessModel()->firstMove = false;
+    game->pieceToMove->getChessModel()->getCurrentBox()->setHasChessPiece(false);
+    game->pieceToMove->getChessModel()->getCurrentBox()->currentPiece = NULL;
+    game->pieceToMove->getChessModel()->getCurrentBox()->resetOriginalColor();
+    placePiece(game->pieceToMove);
+
+    game->pieceToMove = NULL;
 }
 
 void ChessBox::checkForCheck()
@@ -72,7 +103,6 @@ void ChessBox::checkForCheck()
 
     for(size_t i = 0,n=pList.size(); i < n; i++ )
     {
-
         KingView * p = dynamic_cast<KingView *> (pList[i]);
         if(p) continue;
 

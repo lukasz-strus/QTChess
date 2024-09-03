@@ -27,7 +27,7 @@ public:
     bool getHasChessPiece();
     void setHasChessPiece(bool value, ChessPieceView *piece = 0);
 
-    QString getChessPieceColor() ;
+    QString getChessPieceColor();
     void setChessPieceColor(QString value);
 
 private:
@@ -35,6 +35,13 @@ private:
     QColor originalColor;
     bool hasChessPiece;
     QString chessPieceColor;
+
+    bool deselect(QGraphicsSceneMouseEvent *event);
+    void select(QGraphicsSceneMouseEvent *event);
+    bool sameTeam();
+    bool selectedBoxIsInMoveZone();
+    void consumePiece();
+    void movePiece();
 };
 
 #endif // CHESSBOX_H

@@ -12,7 +12,6 @@ public:
     ChessPieceModel *getChessModel();
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-
     void decolor();
 
  protected:
@@ -20,6 +19,13 @@ public:
      ChessPieceModel *model;
 
      void setModel(ChessPieceModel *model);
+
+
+ private:
+     bool deselect();
+     bool pieceIsDeadOrOppositeColor();
+     void select();
+     void tryConsumePiece(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // CHESSPIECE_H
